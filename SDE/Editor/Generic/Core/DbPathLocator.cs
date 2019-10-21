@@ -167,8 +167,9 @@ namespace SDE.Editor.Generic.Core {
 		/// <param name="path">The path.</param>
 		/// <returns>The file type</returns>
 		public static FileType GetFileType(string path) {
-			return path.IsExtension(".conf") ? FileType.Conf : FileType.Txt;
-		}
+            return path.IsExtension(".conf") ? FileType.Conf :  FileType.Txt;
+            //return path.IsExtension(".conf") ? FileType.Conf : (path.IsExtension(".yaml") ? FileType.Yaml : FileType.Txt);
+        }
 
 		/// <summary>
 		/// Determines if the current server is renewal or not.

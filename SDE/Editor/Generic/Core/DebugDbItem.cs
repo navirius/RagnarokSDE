@@ -255,6 +255,13 @@ namespace SDE.Editor.Generic.Core {
 						FileType = FileType.Conf;
 					}
 				}
+                else if((DbSource.SupportedFileType & FileType.Yaml) == FileType.Yaml)
+                {
+                    if(serverType == ServerType.RAthena && FileType==FileType.Detect)
+                    {
+                        FileType = FileType.Yaml;
+                    }
+                }
 
 				if (FileType == FileType.Detect)
 					FileType = FileType.Error;
