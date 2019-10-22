@@ -14,7 +14,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -161,6 +162,7 @@
     <Compile Include="Editor\Generic\Parsers\DbIOClientQuests.cs" />
     <Compile Include="Editor\Generic\Parsers\DbIOConstants.cs" />
     <Compile Include="Editor\Generic\Parsers\DbIOMobSkills.cs" />
+    <Compile Include="Editor\Generic\Parsers\DbIOPet.cs" />
     <Compile Include="Editor\Generic\Parsers\Generic\DbIOFormatting.cs" />
     <Compile Include="Editor\Generic\Parsers\DbIOItemGroups.cs" />
     <Compile Include="Editor\Generic\Parsers\DbIOItems.cs" />
@@ -170,6 +172,7 @@
     <Compile Include="Editor\Generic\Parsers\DbIOSkills.cs" />
     <Compile Include="Editor\Generic\UI\FormatConverters\CustomMobGroupDisplay.cs" />
     <Compile Include="Editor\Generic\UI\FormatConverters\CustomSubTable.cs" />
+    <Compile Include="Editor\Generic\YamlModel\PetDbModel.cs" />
     <Compile Include="Editor\Generic\YamlModel\QuestModel.cs" />
     <Compile Include="SdeStrings.cs" />
     <Compile Include="Core\Utf8Checker.cs" />
@@ -873,7 +876,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_BuildVersioningStyle="None.None.MonthStamp.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
+      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.MonthStamp.Increment" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

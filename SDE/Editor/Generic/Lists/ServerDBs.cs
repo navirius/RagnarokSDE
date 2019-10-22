@@ -72,7 +72,7 @@ namespace SDE.Editor.Generic.Lists {
 		public static readonly ServerDbs MobSkills = new ServerDbs("mob_skill_db") { DisplayName = "Mob Skills", SupportedFileType = FileType.Txt | FileType.Sql, AdditionalTable = MobSkills2 };
 		public static readonly ServerDbs Constants = new ServerDbs("const") { DisplayName = "Constants", UseSubPath = false, SupportedFileType = FileType.Txt | FileType.Conf, AlternativeName = "constants" };
 		public static readonly ServerDbs Pet2 = new ServerDbs("pet_db2") { DisplayName = "Pet2", UseSubPath = false, AlternativeName = "import\\pet_db", IsImport = true };
-		public static readonly ServerDbs Pet = new ServerDbs("pet_db") { DisplayName = "Pet", UseSubPath = false, AdditionalTable = Pet2 };
+		public static readonly ServerDbs Pet = new ServerDbs("pet_db") { DisplayName = "Pet", UseSubPath = false, AdditionalTable = Pet2, SupportedFileType = FileType.Txt | FileType.Yaml};
 		public static readonly ServerDbs Castle2 = new ServerDbs("castle_db2") { DisplayName = "Castle", UseSubPath = false, AlternativeName = "import\\castle_db", IsImport = true };
 		public static readonly ServerDbs Castle = new ServerDbs("castle_db") { DisplayName = "Castle", UseSubPath = false, AdditionalTable = Castle2 };
 		public static readonly ServerDbs Quests2 = new ServerDbs("quest_db2") { DisplayName = "Quest2", UseSubPath = false, SupportedFileType = FileType.Conf | FileType.Txt, AlternativeName = "import\\quest_db", IsImport = true };

@@ -147,11 +147,11 @@ namespace SDE.Editor.Engines.RepairEngine {
 
 							if (citem != null) {
 								if (citem.GetValue<string>(ClientItemAttributes.IdentifiedResourceName) == "") {
-									citemDb.Table.Commands.Set(citem, ClientItemAttributes.IdentifiedResourceName, "Á¶°¢ÄÉÀÌÅ©".ToDisplayEncoding());
+									citemDb.Table.Commands.Set(citem, ClientItemAttributes.IdentifiedResourceName, "ÃÂ¶Â°Â¢Ã„Ã‰Ã€ÃŒÃ…Â©".ToDisplayEncoding());
 								}
 
 								if (citem.GetValue<string>(ClientItemAttributes.UnidentifiedResourceName) == "") {
-									citemDb.Table.Commands.Set(citem, ClientItemAttributes.UnidentifiedResourceName, "Á¶°¢ÄÉÀÌÅ©".ToDisplayEncoding());
+									citemDb.Table.Commands.Set(citem, ClientItemAttributes.UnidentifiedResourceName, "ÃÂ¶Â°Â¢Ã„Ã‰Ã€ÃŒÃ…Â©".ToDisplayEncoding());
 								}
 							}
 

@@ -8,6 +8,7 @@ using Database;
 using ErrorManager;
 using SDE.Editor.Engines.DatabaseEngine;
 using SDE.Editor.Generic.Core;
+using SDE.Editor.Generic.Lists;
 using SDE.View;
 using TokeiLibrary;
 using TokeiLibrary.Shortcuts;
@@ -332,6 +333,10 @@ namespace SDE.Editor.Generic.TabsMakerCore {
 		}
 
 		private void _generateGrid(ref int line, TabSettings<TKey> settings) {
+            if (settings.Gdb.DbSource == ServerDbs.Pet)
+            {
+                Console.WriteLine("pet debug");
+            }
 			if (settings.Gdb.LayoutIndexes != null) {
 				AbstractProvider metaProvider = AbstractProvider.GetProvider(settings.Gdb.LayoutIndexes);
 

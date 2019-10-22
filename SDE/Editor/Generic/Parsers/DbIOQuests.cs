@@ -137,9 +137,9 @@ namespace SDE.Editor.Generic.Parsers {
             else if (debug.FileType == FileType.Yaml)
             {
                 var table = debug.AbsractDb.Table;
-                var input = new StringReader(debug.FilePath);
-                var yaml = new YamlStream();
-                yaml.Load(input);
+                var input = new StreamReader(debug.FilePath, Encoding.UTF8);
+//                var yaml = new YamlStream();
+//                yaml.Load(input);
 
                 var deserializer = new DeserializerBuilder().Build();
                 var quest = deserializer.Deserialize<QuestModel>(input);

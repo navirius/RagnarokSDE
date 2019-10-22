@@ -510,7 +510,7 @@ namespace SDE.Editor.Generic.Core {
 			LayoutIndexes = new int[] {
 				0, 1, -1, 1,
 				1, 19, -1, 1,
-				20, 2
+				20, 5, -1,1
 			};
 			LayoutSearch = new DbAttribute[] {
 				ServerPetAttributes.MobId, ServerPetAttributes.JName,
@@ -520,6 +520,7 @@ namespace SDE.Editor.Generic.Core {
 			DbSource = ServerDbs.Pet;
 			AttributeList = ServerPetAttributes.AttributeList;
 			DbWriter = DbIOMethods.DbWriterComma;
+			DbLoader = DbIOPet.Loader;
 			TabGenerator.OnSetCustomCommands += delegate(GDbTabWrapper<int, ReadableTuple<int>> tab, GTabSettings<int, ReadableTuple<int>> settings, BaseDb gdb) {
 				settings.AddedCommands.Add(new GItemCommand<int, ReadableTuple<int>> {
 					Visibility = gdb.DbSource == ServerDbs.Pet ? Visibility.Visible : Visibility.Collapsed,
@@ -533,6 +534,11 @@ namespace SDE.Editor.Generic.Core {
 				});
 			};
 			TabGenerator.OnSetCustomCommands += GTabsMaker.SelectFromMobDb;
+		}
+
+		protected override void _loadDb()
+		{
+			base._loadDb();
 		}
 	}
 

@@ -13,6 +13,7 @@ using SDE.Editor.Writers;
 using Utilities;
 using Utilities.Extension;
 using Utilities.Services;
+using YamlDotNet.Serialization;
 
 namespace SDE.Editor.Generic.Parsers.Generic {
 	public sealed class DbIOMethods {
@@ -80,6 +81,18 @@ namespace SDE.Editor.Generic.Parsers.Generic {
 			DbWriterComma(debug, db, 0, db.AttributeList.Attributes.Count);
 		}
 
+		public static void DbWriterYaml(DbDebugItem<int> debug, AbstractDb<int> db)
+		{
+			try
+			{
+				var serializer = new Serializer();
+				
+			}
+			catch (Exception e)
+			{
+				debug.ReportException(e);
+			}
+		}
 		public static void DbWriterComma(DbDebugItem<int> debug, AbstractDb<int> db, int from, int to) {
 			DbWriterComma(debug, db, from, to, (t, p) => { });
 		}

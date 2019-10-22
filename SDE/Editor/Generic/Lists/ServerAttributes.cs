@@ -476,7 +476,7 @@ namespace SDE.Editor.Generic.Lists {
 		public static readonly DbAttribute Fullness = new ServerPetAttributes(new DbAttribute("Fullness", typeof(string), "0", "Hunger decrease amount")) { DataConverter = ValueConverters.GetSetZeroString };
 		public static readonly DbAttribute HungryDelay = new ServerPetAttributes(new DbAttribute("HungryDelay", typeof(string), "60", "Hunger decrease delay")) { DataConverter = ValueConverters.GetSetZeroString };
 		public static readonly DbAttribute RHungry = new ServerPetAttributes(new DbAttribute("RHungry", typeof(string), "0", "Intimacy increased\r\nwhen fed")) { DataConverter = ValueConverters.GetSetZeroString };
-		public static readonly DbAttribute RFull = new ServerPetAttributes(new DbAttribute("RHungry", typeof(string), "0", "Intimacy decreased\r\nwhen over-fed")) { DataConverter = ValueConverters.GetSetZeroString };
+		public static readonly DbAttribute RFull = new ServerPetAttributes(new DbAttribute("ROHungry", typeof(string), "0", "Intimacy decreased\r\nwhen over-fed")) { DataConverter = ValueConverters.GetSetZeroString };
 		public static readonly DbAttribute Intimate = new ServerPetAttributes(new DbAttribute("Intimate", typeof(string), "0", "Initial intimacy")) { DataConverter = ValueConverters.GetSetZeroString };
 		public static readonly DbAttribute Die = new ServerPetAttributes(new DbAttribute("Die", typeof(string), "0", "Initial lost after dying")) { DataConverter = ValueConverters.GetSetZeroString };
 		public static readonly DbAttribute Capture = new ServerPetAttributes(new DbAttribute("Capture", typeof(PourcentagePreviewProperty<int>), "0", "Capture success rate")) { DataConverter = ValueConverters.GetSetZeroString };
@@ -487,8 +487,11 @@ namespace SDE.Editor.Generic.Lists {
 		public static readonly DbAttribute DefAttackRate = new ServerPetAttributes(new DbAttribute("DefAttackRate", typeof(string), "0", "Defense attack rate")) { DataConverter = ValueConverters.GetSetZeroString };
 		public static readonly DbAttribute ChangeTargetRate = new ServerPetAttributes(new DbAttribute("ChangeTargetRate", typeof(string), "0", "Change target rate")) { DataConverter = ValueConverters.GetSetZeroString };
 		public static readonly DbAttribute PetScript = new ServerPetAttributes(new DbAttribute("PetScript", typeof(CustomScriptProperty<int>), "{}", "Pet script")) { DataConverter = ValueConverters.GetScriptNoBracketsSetScriptWithBrackets };
-		public static readonly DbAttribute LoyalScript = new ServerPetAttributes(new DbAttribute("LoyalScript", typeof(CustomScriptProperty<int>), "{}", "Loyal script")) { DataConverter = ValueConverters.GetScriptNoBracketsSetScriptWithBrackets };
-
+		public static readonly DbAttribute LoyalScript = new ServerPetAttributes(new DbAttribute("LoyalScript", typeof(CustomScriptProperty<int>), "{}", "Support script")) { DataConverter = ValueConverters.GetScriptNoBracketsSetScriptWithBrackets };
+		public static readonly DbAttribute TameItemId = new ServerPetAttributes(new DbAttribute("TameItem", typeof(SelectTupleProperty<int>), "0", "Tame ID")) { DataConverter = ValueConverters.GetSetZeroString, AttachedObject = ServerDbs.Items };
+		public static readonly DbAttribute HungerIncrease = new ServerPetAttributes(new DbAttribute("HungerIncrease", typeof(string), "20", "Hunger Increase Amount")) { DataConverter = ValueConverters.GetSetZeroString };
+		public static readonly DbAttribute IntimacyHungry = new ServerPetAttributes(new DbAttribute("IntimacyHungry", typeof(string), "-5", "Intimacy Hungry increase")) { DataConverter = ValueConverters.GetSetZeroString };
+		public static readonly DbAttribute Retaliate = new ServerPetAttributes(new DbAttribute("Retaliate", typeof(PourcentagePreviewProperty<int>), "0", "Retaliate rate")) { DataConverter = ValueConverters.GetSetZeroString };
 		private ServerPetAttributes(DbAttribute attribute)
 			: base(attribute) {
 			AttributeList.Add(this);
