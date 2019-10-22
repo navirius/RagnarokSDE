@@ -201,9 +201,13 @@ namespace SDE.Editor.Generic.Core {
 
 		public bool Load(ServerDbs dbSource) {
 			DbSource = dbSource;
-			string path = DbPathLocator.DetectPath(DbSource);
+            string path = string.Empty;
+            if (DbSource.Filename.Contains("quest_db"))
+			    path = DbPathLocator.DetectPath(DbSource);
+            else
+                path = DbPathLocator.DetectPath(DbSource);
 
-			TextFileHelper.LatestFile = path;
+            TextFileHelper.LatestFile = path;
 
 			if (String.IsNullOrEmpty(path)) {
 				if (_db.ThrowFileNotFoundException) {

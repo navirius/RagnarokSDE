@@ -76,7 +76,7 @@ namespace SDE.Editor.Generic.Lists {
 		public static readonly ServerDbs Castle2 = new ServerDbs("castle_db2") { DisplayName = "Castle", UseSubPath = false, AlternativeName = "import\\castle_db", IsImport = true };
 		public static readonly ServerDbs Castle = new ServerDbs("castle_db") { DisplayName = "Castle", UseSubPath = false, AdditionalTable = Castle2 };
 		public static readonly ServerDbs Quests2 = new ServerDbs("quest_db2") { DisplayName = "Quest2", UseSubPath = false, SupportedFileType = FileType.Conf | FileType.Txt, AlternativeName = "import\\quest_db", IsImport = true };
-		public static readonly ServerDbs Quests = new ServerDbs("quest_db") { DisplayName = "Quest", UseSubPath = true, SupportedFileType = FileType.Conf | FileType.Txt, AdditionalTable = Quests2 };
+		public static readonly ServerDbs Quests = new ServerDbs("quest_db") { DisplayName = "Quest", UseSubPath = true, SupportedFileType = FileType.Conf | FileType.Txt | FileType.Yaml, AdditionalTable = Quests2 };
 		public static readonly ServerDbs ClientResourceDb = new ServerDbs("idnum2itemresnametable.txt") { DisplayName = "Fallback Resources" };
 		public static readonly ServerDbs Cheevo = new ServerDbs("achievement_db") { DisplayName = "Cheevos", SupportedFileType = FileType.Conf, UseSubPath = false };
 		public static readonly ServerDbs ItemGroups = new ServerDbs("item_group_db") { DisplayName = "Item Groups", AlternativeName = "item_group", SupportedFileType = FileType.Conf | FileType.Txt };

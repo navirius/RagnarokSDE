@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Database;
@@ -10,104 +11,176 @@ using SDE.Editor.Engines.Parsers;
 using SDE.Editor.Engines.Parsers.Libconfig;
 using SDE.Editor.Generic.Core;
 using SDE.Editor.Generic.Lists;
+using SDE.Editor.Generic.YamlModel;
 using SDE.Editor.Writers;
+using YamlDotNet.RepresentationModel;
+using YamlDotNet.Serialization;
 
 namespace SDE.Editor.Generic.Parsers {
 	public sealed class DbIOQuests {
 		public static void Loader<TKey>(DbDebugItem<TKey> debug, AbstractDb<TKey> db) {
-			if (debug.FileType == FileType.Txt) {
-				List<DbAttribute> attributes = new List<DbAttribute>(db.AttributeList.Attributes);
+            if (debug.FileType == FileType.Txt)
+            {
+                List<DbAttribute> attributes = new List<DbAttribute>(db.AttributeList.Attributes);
 
-				bool rAthenaNewFormat = false;
-				int[] oldColumns = {
-					0, 1, 2, 3, 4, 5, 6, 7, 17
-				};
+                bool rAthenaNewFormat = false;
+                int[] oldColumns = {
+                    0, 1, 2, 3, 4, 5, 6, 7, 17
+                };
 
-				foreach (string[] elements in TextFileHelper.GetElementsByCommasQuotes(FtpHelper.ReadAllBytes(debug.FilePath))) {
-					try {
-						TKey id = (TKey)TypeDescriptor.GetConverter(typeof(TKey)).ConvertFrom(elements[0]);
+                foreach (string[] elements in TextFileHelper.GetElementsByCommasQuotes(FtpHelper.ReadAllBytes(debug.FilePath)))
+                {
+                    try
+                    {
+                        TKey id = (TKey)TypeDescriptor.GetConverter(typeof(TKey)).ConvertFrom(elements[0]);
 
-						if (elements.Length == 18) {
-							rAthenaNewFormat = true;
-							db.Attached["rAthenaFormat"] = 18;
-						}
+                        if (elements.Length == 18)
+                        {
+                            rAthenaNewFormat = true;
+                            db.Attached["rAthenaFormat"] = 18;
+                        }
 
-						if (rAthenaNewFormat) {
-							for (int index = 1; index < elements.Length; index++) {
-								DbAttribute property = attributes[index];
-								db.Table.SetRaw(id, property, elements[index]);
-							}
-						}
-						else {
-							for (int index = 1; index < oldColumns.Length; index++) {
-								DbAttribute property = attributes[oldColumns[index]];
-								db.Table.SetRaw(id, property, elements[index]);
-							}
-						}
-					}
-					catch {
-						if (elements.Length <= 0) {
-							if (!debug.ReportIdException("#")) return;
-						}
-						else if (!debug.ReportIdException(elements[0])) return;
-					}
-				}
-			}
-			else if (debug.FileType == FileType.Conf) {
-				var ele = new LibconfigParser(debug.FilePath);
-				var table = debug.AbsractDb.Table;
+                        if (rAthenaNewFormat)
+                        {
+                            for (int index = 1; index < elements.Length; index++)
+                            {
+                                DbAttribute property = attributes[index];
+                                db.Table.SetRaw(id, property, elements[index]);
+                            }
+                        }
+                        else
+                        {
+                            for (int index = 1; index < oldColumns.Length; index++)
+                            {
+                                DbAttribute property = attributes[oldColumns[index]];
+                                db.Table.SetRaw(id, property, elements[index]);
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        if (elements.Length <= 0)
+                        {
+                            if (!debug.ReportIdException("#")) return;
+                        }
+                        else if (!debug.ReportIdException(elements[0])) return;
+                    }
+                }
+            }
+            else if (debug.FileType == FileType.Conf)
+            {
+                var ele = new LibconfigParser(debug.FilePath);
+                var table = debug.AbsractDb.Table;
 
-				foreach (var quest in ele.Output["copy_paste"] ?? ele.Output["quest_db"]) {
-					try {
-						int id = Int32.Parse(quest["Id"]);
-						TKey questId = (TKey)(object)id;
+                foreach (var quest in ele.Output["copy_paste"] ?? ele.Output["quest_db"])
+                {
+                    try
+                    {
+                        int id = Int32.Parse(quest["Id"]);
 
-						table.SetRaw(questId, ServerQuestsAttributes.QuestTitle, "\"" + (quest["Name"] ?? "") + "\"");
-						table.SetRaw(questId, ServerQuestsAttributes.TimeLimit, (quest["TimeLimit"] ?? "0"));
+                        TKey questId = (TKey)(object)id;
 
-						var targets = quest["Targets"] as LibconfigList;
+                        table.SetRaw(questId, ServerQuestsAttributes.QuestTitle, "\"" + (quest["Name"] ?? "") + "\"");
+                        table.SetRaw(questId, ServerQuestsAttributes.TimeLimit, (quest["TimeLimit"] ?? "0"));
 
-						if (targets != null) {
-							int count = 0;
+                        var targets = quest["Targets"] as LibconfigList;
 
-							foreach (var target in targets) {
-								if (count >= 3) {
-									debug.ReportIdExceptionWithError("The maximum amount of targets has been reached (up to 3).", id, targets.Line);
-									continue;
-								}
+                        if (targets != null)
+                        {
+                            int count = 0;
 
-								table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.TargetId1.Index + 2 * count], target["MobId"] ?? "0");
-								table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.Val1.Index + 2 * count], target["Count"] ?? "0");
-								count++;
-							}
-						}
+                            foreach (var target in targets)
+                            {
+                                if (count >= 3)
+                                {
+                                    debug.ReportIdExceptionWithError("The maximum amount of targets has been reached (up to 3).", id, targets.Line);
+                                    continue;
+                                }
 
-						var drops = quest["Drops"] as LibconfigList;
+                                table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.TargetId1.Index + 2 * count], target["MobId"] ?? "0");
+                                table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.Val1.Index + 2 * count], target["Count"] ?? "0");
+                                count++;
+                            }
+                        }
 
-						if (drops != null) {
-							int count = 0;
+                        var drops = quest["Drops"] as LibconfigList;
 
-							foreach (var drop in drops) {
-								if (count >= 3) {
-									debug.ReportIdExceptionWithError("The maximum amount of drops has been reached (up to 3).", id, drops.Line);
-									continue;
-								}
+                        if (drops != null)
+                        {
+                            int count = 0;
 
-								table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.NameId1.Index + 3 * count], drop["ItemId"] ?? "0");
-								table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.Rate1.Index + 3 * count], drop["Rate"] ?? "0");
-								table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.MobId1.Index + 3 * count], drop["MobId"] ?? "0");
-								count++;
-							}
-						}
-					}
-					catch {
-						if (quest["Id"] == null) {
-							if (!debug.ReportIdException("#", quest.Line)) return;
-						}
-						else if (!debug.ReportIdException(quest["Id"], quest.Line)) return;
-					}
-				}
-			}
+                            foreach (var drop in drops)
+                            {
+                                if (count >= 3)
+                                {
+                                    debug.ReportIdExceptionWithError("The maximum amount of drops has been reached (up to 3).", id, drops.Line);
+                                    continue;
+                                }
+
+                                table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.NameId1.Index + 3 * count], drop["ItemId"] ?? "0");
+                                table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.Rate1.Index + 3 * count], drop["Rate"] ?? "0");
+                                table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.MobId1.Index + 3 * count], drop["MobId"] ?? "0");
+                                count++;
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        if (quest["Id"] == null)
+                        {
+                            if (!debug.ReportIdException("#", quest.Line)) return;
+                        }
+                        else if (!debug.ReportIdException(quest["Id"], quest.Line)) return;
+                    }
+                }
+            }
+            else if (debug.FileType == FileType.Yaml)
+            {
+                var table = debug.AbsractDb.Table;
+                var input = new StringReader(debug.FilePath);
+                var yaml = new YamlStream();
+                yaml.Load(input);
+
+                var deserializer = new DeserializerBuilder().Build();
+                var quest = deserializer.Deserialize<QuestModel>(input);
+                foreach(var item in quest.Body)
+                {
+                    TKey questId = (TKey)(object)item.Id;
+                    table.SetRaw(questId, ServerQuestsAttributes.QuestTitle, "\"" + (item.Title ?? "") + "\"");
+                    table.SetRaw(questId, ServerQuestsAttributes.TimeLimit, item.TimeLimit);
+                    int count = 0;
+                    foreach(TargetModel itemTarget in item.Target)
+                    {
+                        if (count >= 3)
+                        {
+                            debug.ReportIdExceptionWithError("The maximum amount of targets has been reached (up to 3).", item.Id, 0);
+                            continue;
+                        }
+
+                        table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.TargetId1.Index + 2 * count], itemTarget.Mob ?? "0");
+                        table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.Val1.Index + 2 * count], itemTarget.Count);
+                        count++;
+                    }
+
+                    count = 0;
+                    foreach(DropModel itemDrop in item.Drop)
+                    {
+
+
+                        if (count >= 3)
+                        {
+                            debug.ReportIdExceptionWithError("The maximum amount of drops has been reached (up to 3).", item.Drop , 0);
+                            continue;
+                        }
+
+                        table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.NameId1.Index + 3 * count], itemDrop.Item ?? "0");
+                        table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.Rate1.Index + 3 * count], itemDrop.Rate.ToString() ?? "0");
+                        table.SetRaw(questId, ServerQuestsAttributes.AttributeList[ServerQuestsAttributes.MobId1.Index + 3 * count], itemDrop.Mob ?? "0");
+                        count++;
+                    }
+                }
+
+            }
 		}
 
 		public static void WriteEntry<TKey>(StringBuilder builder, ReadableTuple<TKey> tuple) {

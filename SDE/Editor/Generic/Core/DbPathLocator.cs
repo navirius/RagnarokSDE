@@ -93,13 +93,13 @@ namespace SDE.Editor.Generic.Core {
 
 		private static string _getInParentPath(string fileInput) {
 			string path = GrfPath.GetDirectoryName(ProjectConfiguration.DatabasePath);
-			string[] files = fileInput.GetExtension() == null ? new string[] { fileInput + ".txt", fileInput + ".conf" } : new string[] { fileInput };
+			string[] files = fileInput.GetExtension() == null ? new string[] { fileInput + ".txt", fileInput + ".conf", fileInput+".yml" } : new string[] { fileInput };
 			return files.Select(file => GrfPath.CombineUrl(path, file)).FirstOrDefault(FtpHelper.Exists);
 		}
 
 		private static string _getInCurrentPath(string fileInput) {
 			string path = ProjectConfiguration.DatabasePath;
-			string[] files = fileInput.GetExtension() == null ? new string[] { fileInput + ".txt", fileInput + ".conf" } : new string[] { fileInput };
+			string[] files = fileInput.GetExtension() == null ? new string[] { fileInput + ".txt", fileInput + ".conf", fileInput+".yml" } : new string[] { fileInput };
 			return files.Select(file => GrfPath.CombineUrl(path, file)).FirstOrDefault(FtpHelper.Exists);
 		}
 
@@ -167,8 +167,8 @@ namespace SDE.Editor.Generic.Core {
 		/// <param name="path">The path.</param>
 		/// <returns>The file type</returns>
 		public static FileType GetFileType(string path) {
-            return path.IsExtension(".conf") ? FileType.Conf :  FileType.Txt;
-            //return path.IsExtension(".conf") ? FileType.Conf : (path.IsExtension(".yaml") ? FileType.Yaml : FileType.Txt);
+            //return path.IsExtension(".conf") ? FileType.Conf :  FileType.Txt;
+            return path.IsExtension(".conf") ? FileType.Conf : (path.IsExtension(".yml") ? FileType.Yaml : FileType.Txt);
         }
 
 		/// <summary>

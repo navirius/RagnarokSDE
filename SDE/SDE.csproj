@@ -61,24 +61,23 @@
     <StartupObject>SDE.GRFEditorMain</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ColorPicker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Librairies\ColorPicker.dll</HintPath>
+    <Reference Include="ColorPicker">
+      <HintPath>Files\ColorPicker.dll</HintPath>
     </Reference>
-    <Reference Include="Database, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Librairies\Database.dll</HintPath>
+    <Reference Include="Database">
+      <HintPath>Files\Database.dll</HintPath>
     </Reference>
-    <Reference Include="ErrorManager, Version=1.2.5494.34248, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Librairies\ErrorManager.dll</HintPath>
+    <Reference Include="ErrorManager">
+      <HintPath>Files\ErrorManager.dll</HintPath>
     </Reference>
     <Reference Include="Ftp">
       <HintPath>Files\Ftp.dll</HintPath>
     </Reference>
-    <Reference Include="GRF, Version=1.2.6171.1173, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Librairies\GRF.dll</HintPath>
+    <Reference Include="GRF">
+      <HintPath>Files\GRF.dll</HintPath>
     </Reference>
-    <Reference Include="GrfToWpfBridge, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Librairies\GrfToWpfBridge.dll</HintPath>
+    <Reference Include="GrfToWpfBridge">
+      <HintPath>Files\GrfToWpfBridge.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.AvalonEdit">
       <HintPath>Files\ICSharpCode.AvalonEdit.dll</HintPath>
@@ -108,18 +107,20 @@
     <Reference Include="Tamir.SharpSSH">
       <HintPath>Files\Tamir.SharpSSH.dll</HintPath>
     </Reference>
-    <Reference Include="TokeiLibrary, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Librairies\TokeiLibrary.dll</HintPath>
+    <Reference Include="TokeiLibrary">
+      <HintPath>Files\TokeiLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="Utilities, Version=1.2.6171.1170, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Librairies\Utilities.dll</HintPath>
+    <Reference Include="Utilities">
+      <HintPath>Files\Utilities.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WPFToolkit">
       <HintPath>Files\WPFToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="YamlDotNet">
+      <HintPath>Files\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +170,7 @@
     <Compile Include="Editor\Generic\Parsers\DbIOSkills.cs" />
     <Compile Include="Editor\Generic\UI\FormatConverters\CustomMobGroupDisplay.cs" />
     <Compile Include="Editor\Generic\UI\FormatConverters\CustomSubTable.cs" />
+    <Compile Include="Editor\Generic\YamlModel\QuestModel.cs" />
     <Compile Include="SdeStrings.cs" />
     <Compile Include="Core\Utf8Checker.cs" />
     <Compile Include="Core\VirtualFileDataObject.cs" />
@@ -871,7 +873,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.MonthStamp.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.MonthStamp.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
