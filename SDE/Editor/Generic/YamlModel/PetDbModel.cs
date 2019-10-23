@@ -8,7 +8,7 @@ namespace SDE.Editor.Generic.YamlModel
     public class PetDbModel
     {
         public PetHeaderModel Header { get; set; }
-        public List<PetItemBodyModel> Body { get; set; }
+        public List<PetItemBodyModel> Body { get; set; } = new List<PetItemBodyModel>();
     }
 
     public class PetHeaderModel
