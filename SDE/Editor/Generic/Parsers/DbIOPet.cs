@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text;
+using Newtonsoft.Json;
 using SDE.Editor.Generic.Core;
 using SDE.Editor.Generic.Lists;
 using SDE.Editor.Generic.Parsers.Generic;
@@ -58,10 +59,7 @@ namespace SDE.Editor.Generic.Parsers
                             table.SetRaw(mobId, ServerPetAttributes.ChangeTargetRate, bodyItem.ChangeTargetRate);
                             table.SetRaw(mobId, ServerPetAttributes.PetScript, bodyItem.Script);
                             table.SetRaw(mobId, ServerPetAttributes.LoyalScript, bodyItem.SupportScript);
-                            foreach (PetEvolutionItemModel itemModel in bodyItem.Evolution)
-                            {
-                                
-                            }
+                            table.SetRaw(mobId, ServerPetAttributes.Evolution, JsonConvert.SerializeObject(bodyItem.Evolution));
                             //table.SetRaw(mobId, ServerPetAttributes.EggId);
                         }
                         

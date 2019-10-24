@@ -98,6 +98,10 @@
     <Reference Include="Microsoft.Scripting.Core">
       <HintPath>Files\Microsoft.Scripting.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Files\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Org.Mentalis.Security">
       <HintPath>Files\Org.Mentalis.Security.dll</HintPath>
     </Reference>
@@ -236,6 +240,12 @@
     </Compile>
     <Compile Include="View\Dialogs\CheevoResourceDialog.xaml.cs">
       <DependentUpon>CheevoResourceDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialogs\EvolutionDialog.xaml.cs">
+      <DependentUpon>EvolutionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialogs\ItemRequirementDialog.xaml.cs">
+      <DependentUpon>ItemRequirementDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ObjectView\AccessoryItemView.cs" />
     <Compile Include="View\Controls\ClickSelectTextBox.cs" />
@@ -504,6 +514,14 @@
     <Page Include="View\Dialogs\CheevoResourceDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Dialogs\EvolutionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialogs\ItemRequirementDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SdeEditor.xaml">
       <Generator>MSBuild:Compile</Generator>

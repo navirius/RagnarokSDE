@@ -333,10 +333,10 @@ namespace SDE.Editor.Generic.TabsMakerCore {
 		}
 
 		private void _generateGrid(ref int line, TabSettings<TKey> settings) {
-            if (settings.Gdb.DbSource == ServerDbs.Pet)
-            {
-                Console.WriteLine("pet debug");
-            }
+            //if (settings.Gdb.DbSource == ServerDbs.Pet)
+            //{
+            //    Console.WriteLine("pet debug");
+            //}
 			if (settings.Gdb.LayoutIndexes != null) {
 				AbstractProvider metaProvider = AbstractProvider.GetProvider(settings.Gdb.LayoutIndexes);
 

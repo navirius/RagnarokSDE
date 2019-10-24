@@ -510,7 +510,7 @@ namespace SDE.Editor.Generic.Core {
 			LayoutIndexes = new int[] {
 				0, 1, -1, 1,
 				1, 19, -1, 1,
-				20, 5, -1,1
+				20, 7, -1,1
 			};
 			LayoutSearch = new DbAttribute[] {
 				ServerPetAttributes.MobId, ServerPetAttributes.JName,

@@ -492,7 +492,9 @@ namespace SDE.Editor.Generic.Lists {
 		public static readonly DbAttribute HungerIncrease = new ServerPetAttributes(new DbAttribute("HungerIncrease", typeof(string), "20", "Hunger Increase Amount")) { DataConverter = ValueConverters.GetSetZeroString };
 		public static readonly DbAttribute IntimacyHungry = new ServerPetAttributes(new DbAttribute("IntimacyHungry", typeof(string), "-5", "Intimacy Hungry increase")) { DataConverter = ValueConverters.GetSetZeroString };
 		public static readonly DbAttribute Retaliate = new ServerPetAttributes(new DbAttribute("Retaliate", typeof(PourcentagePreviewProperty<int>), "0", "Retaliate rate")) { DataConverter = ValueConverters.GetSetZeroString };
-		private ServerPetAttributes(DbAttribute attribute)
+        public static readonly DbAttribute Evolution = new ServerPetAttributes(new DbAttribute("Evolution", typeof(EvolutionEditProperty<int>), "{}", "Evolution")) { DataConverter = ValueConverters.GetSetZeroString };
+
+        private ServerPetAttributes(DbAttribute attribute)
 			: base(attribute) {
 			AttributeList.Add(this);
 		}

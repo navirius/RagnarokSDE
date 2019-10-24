@@ -20,7 +20,8 @@ namespace SDE.View.Dialogs {
 		private readonly bool _partialFill;
 		private readonly List<TextBlock> _previews = new List<TextBlock>();
 
-		public LevelEditDialog(string text, object maxLevel, bool showPreview, bool showPreview2, bool autoFill) : base("Level edit", "cde.ico", SizeToContent.Height, ResizeMode.CanResize) {
+		public LevelEditDialog(string text, object maxLevel, bool showPreview, bool showPreview2, bool autoFill) 
+            : base("Level edit", "cde.ico", SizeToContent.Height, ResizeMode.CanResize) {
 			_autoFill = autoFill;
 			InitializeComponent();
 			Extensions.SetMinimalSize(this);

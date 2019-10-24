@@ -32,7 +32,10 @@ namespace SDE.Editor.Generic.UI.FormatConverters {
 		protected Grid _grid;
 		protected GDbTabWrapper<TKey, ReadableTuple<TKey>> _tab;
 		protected TextBox _textBox;
-
+        public TextBox DisplayTextBox
+        {
+            get { return _textBox; }
+        }
 		public override void Init(GDbTabWrapper<TKey, ReadableTuple<TKey>> tab, DisplayableProperty<TKey, ReadableTuple<TKey>> dp) {
 			if (_textBox == null)
 				_textBox = new TextBox();
@@ -375,10 +378,37 @@ namespace SDE.Editor.Generic.UI.FormatConverters {
 		}
 	}
 
+    public class EvolutionEditProperty<TKey> : CustomProperty<TKey>
+    {
+        public override void ButtonClicked()
+        {
+            var db = _tab.GetTable<int>(ServerDbs.Mobs);
+            object maxVal = 10;
+            //var tuple = db.TryGetTuple(((ReadableTuple<TKey>) _tab.List.SelectedItem).GetKey<int>());
+            EvolutionDialog dialog = new EvolutionDialog(_textBox.Text);
+            dialog.OnShowItemRequirementDialog+= delegate(string jsonValue)
+            {
+                ItemRequirementProperty<TKey> itemReq = new ItemRequirementProperty<TKey>();
+                itemReq.ButtonClicked();
+            };
+            InputWindowHelper.Edit(dialog, _textBox, _button);
+        }
+    }
+
+    public class ItemRequirementProperty<TKey> : CustomProperty<TKey>
+    {
+        public override void ButtonClicked()
+        {
+            var db = _tab.GetTable<int>(ServerDbs.Items);
+            object maxVal = 10;
+            ItemRequirementDialog dialog = new ItemRequirementDialog();
+            InputWindowHelper.Edit(dialog, _textBox, _button);
+        }
+    }
 	public class LevelIntEditAnyProperty<TKey> : CustomProperty<TKey> {
 		public override void ButtonClicked() {
 			LevelEditDialog dialog = new LevelEditDialog(_textBox.Text, 30, false, false, false);
-			InputWindowHelper.Edit(dialog, _textBox, _button);
+            InputWindowHelper.Edit(dialog, _textBox, _button);
 		}
 	}
 
@@ -696,6 +726,10 @@ namespace SDE.Editor.Generic.UI.FormatConverters {
 		private MenuItem _select;
 		private TextBlock _textPreview;
 
+        public void SetValue(DependencyProperty dp, object value)
+        {
+            _grid.SetValue(dp, value);
+        }
 		protected override void _onInitalized() {
 			_button.Content = new Image { Source = ApplicationManager.PreloadResourceImage("arrowdown.png"), Stretch = Stretch.None };
 		}
@@ -737,6 +771,10 @@ namespace SDE.Editor.Generic.UI.FormatConverters {
 			_isLoaded = true;
 		}
 
+        public Grid ContentGrid
+        {
+            get { return _grid; }
+        }
 		protected override void _onTextChanged() {
 			OnUpdate(null);
 		}
