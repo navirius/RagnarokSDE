@@ -25,7 +25,13 @@ namespace SDE.View.Dialogs {
 			bool isJob = dialog is JobEditDialog && SdeAppConfiguration.UseIntegratedDialogsForJobs;
 			bool isTime = dialog is TimeEditDialog && SdeAppConfiguration.UseIntegratedDialogsForTime;
 			bool isRate = dialog is RateEditDialog;
-			bool isOther = !(dialog is ScriptEditDialog || dialog is LevelEditDialog || dialog is GenericFlagDialog || dialog is JobEditDialog || dialog is TimeEditDialog) && SdeAppConfiguration.UseIntegratedDialogsForFlags;
+            bool isOther = !(dialog is ScriptEditDialog || 
+                             dialog is LevelEditDialog || 
+                             dialog is GenericFlagDialog || 
+                             dialog is JobEditDialog || 
+                             dialog is EvolutionDialog ||
+                             dialog is ItemRequirementDialog ||
+                             dialog is TimeEditDialog) && SdeAppConfiguration.UseIntegratedDialogsForFlags;
 
 			if (isScript || isLevel || isFlag || isJob || isTime || isRate || isOther) {
 				inputWindow.Footer.Visibility = Visibility.Collapsed;

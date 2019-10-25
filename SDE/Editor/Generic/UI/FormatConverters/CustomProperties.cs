@@ -10,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Database;
 using ErrorManager;
+using GRF.Threading;
+using Newtonsoft.Json;
 using SDE.Core;
 using SDE.Editor.Engines.LuaEngine;
 using SDE.Editor.Engines.Parsers;
@@ -386,25 +388,38 @@ namespace SDE.Editor.Generic.UI.FormatConverters {
             object maxVal = 10;
             //var tuple = db.TryGetTuple(((ReadableTuple<TKey>) _tab.List.SelectedItem).GetKey<int>());
             EvolutionDialog dialog = new EvolutionDialog(_textBox.Text);
-            dialog.OnShowItemRequirementDialog+= delegate(string jsonValue)
+            dialog.Deactivated+= delegate(object sender, EventArgs args)
             {
-                ItemRequirementProperty<TKey> itemReq = new ItemRequirementProperty<TKey>();
-                itemReq.ButtonClicked();
+                //GrfThread.Start(() =>
+                //{
+                //    dialog.Dispatch(() => )
+                //});
+            };
+            dialog.OnShowItemRequirementDialog+= delegate(string jsonValue, int index)
+            {
+                ItemRequirementDialog dialogItem = new ItemRequirementDialog(jsonValue, dialog);
+                InputWindowHelper.Edit(dialogItem, _textBox, _button);
+                if (dialogItem.DialogResult == true)
+                {
+                    var result = dialogItem.ItemRequirement;
+                    dialog.UpdateItemRequirementFromDialog(result, index);
+
+                }
             };
             InputWindowHelper.Edit(dialog, _textBox, _button);
         }
     }
 
-    public class ItemRequirementProperty<TKey> : CustomProperty<TKey>
-    {
-        public override void ButtonClicked()
-        {
-            var db = _tab.GetTable<int>(ServerDbs.Items);
-            object maxVal = 10;
-            ItemRequirementDialog dialog = new ItemRequirementDialog();
-            InputWindowHelper.Edit(dialog, _textBox, _button);
-        }
-    }
+    //public class ItemRequirementProperty<TKey> : CustomProperty<TKey>
+    //{
+    //    public override void ButtonClicked()
+    //    {
+    //        //var db = _tab.GetTable<int>(ServerDbs.Items);
+    //        object maxVal = 10;
+    //        ItemRequirementDialog dialog = new ItemRequirementDialog("");
+    //        InputWindowHelper.Edit(dialog, _textBox, _button);
+    //    }
+    //}
 	public class LevelIntEditAnyProperty<TKey> : CustomProperty<TKey> {
 		public override void ButtonClicked() {
 			LevelEditDialog dialog = new LevelEditDialog(_textBox.Text, 30, false, false, false);

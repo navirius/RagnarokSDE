@@ -178,6 +178,7 @@
     <Compile Include="Editor\Generic\UI\FormatConverters\CustomSubTable.cs" />
     <Compile Include="Editor\Generic\YamlModel\PetDbModel.cs" />
     <Compile Include="Editor\Generic\YamlModel\QuestModel.cs" />
+    <Compile Include="Editor\Utils.cs" />
     <Compile Include="SdeStrings.cs" />
     <Compile Include="Core\Utf8Checker.cs" />
     <Compile Include="Core\VirtualFileDataObject.cs" />
@@ -894,7 +895,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UpdateFileVersion="True" BuildVersion_BuildVersioningStyle="None.None.MonthStamp.Increment" />
+      <UserProperties BuildVersion_BuildVersioningStyle="None.None.MonthStamp.Increment" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" />
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>

@@ -18,9 +18,18 @@ namespace SDE.View.Dialogs {
 	/// <summary>
 	/// Interaction logic for SelectFromDialog.xaml
 	/// </summary>
-	public partial class SelectFromDialog : TkWindow {
-		public SelectFromDialog(Table<int, ReadableTuple<int>> table, ServerDbs db, string text) : base("Select item in [" + db.Filename + "]", "cde.ico", SizeToContent.Manual, ResizeMode.CanResize) {
+	public partial class SelectFromDialog : TkWindow
+    {
+        private DbAttribute dbAttribute;
+        public ServerDbs db;
+        private MetaTable<int> table;
+
+        public SelectFromDialog(Table<int, ReadableTuple<int>> table, ServerDbs db, string text, DbAttribute attribute = null) 
+            : base("Select item in [" + db.Filename + "]", "cde.ico", SizeToContent.Manual, ResizeMode.CanResize) {
 			InitializeComponent();
+            this.dbAttribute = attribute;
+            this.db = db;
+            this.table = (MetaTable<int>) table;
 			Extensions.SetMinimalSize(this);
 
 			DbAttribute attId = table.AttributeList.PrimaryAttribute;
@@ -89,7 +98,24 @@ namespace SDE.View.Dialogs {
 			}
 		}
 
-		private void _listView_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+        public object ValueByAttribute
+        {
+            get
+            {
+                if (dbAttribute == null)
+                    return default(object);
+
+                if (_listView.SelectedItem != null && ((IList) _listView.ItemsSource).Contains(_listView.SelectedItem))
+                {
+                    return Editor.Utils.FindAttributeValueById(table, Id, dbAttribute);
+                }
+
+                return default(object);
+            }
+
+        }
+		private void _listView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
 			if (_listView.SelectedItem != null && ((IList)_listView.ItemsSource).Contains(_listView.SelectedItem))
 				DialogResult = true;
 

@@ -32,7 +32,7 @@ namespace SDE.Editor.Generic.Parsers
                     foreach(var bodyItem in pet.Body)
                     {
                         var mobTable = SdeEditor.Instance.ProjectDatabase.GetMetaTable<int>(ServerDbs.Mobs);
-                        TKey mobId = FindMobID<TKey>(mobTable, bodyItem);
+                        TKey mobId = Utils.FindMobIDBySpriteName<TKey>(mobTable, bodyItem.Mob);
                         var itemTable = SdeEditor.Instance.ProjectDatabase.GetMetaTable<int>(ServerDbs.Items);
                         int mobIntId = (int) (object) (mobId);
                         if (mobIntId != 0)
@@ -82,23 +82,7 @@ namespace SDE.Editor.Generic.Parsers
 
             return itemId;
         }
-        private static TKey FindMobID<TKey>(MetaTable<int> mobTable, PetItemBodyModel bodyItem)
-        {
-            int mobId = 0;
-            foreach (var tupleItem in mobTable.FastItems)
-            {
-
-                string spriteName = tupleItem.GetStringValue(ServerMobAttributes.SpriteName.Index);
-                if (spriteName.ToLower() == bodyItem.Mob.ToLower())
-                {
-                    mobId = tupleItem.Key;
-                    break;
-                }
-            }
-
-            return (TKey)(object)mobId;
-        }
-
+        
         public static void WriteEntry<TKey>(StringBuilder builder, ReadableTuple<TKey> tuple)
         {
             
